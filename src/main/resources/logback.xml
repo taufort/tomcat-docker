@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%boldCyan(%d{HH:mm:ss.SSS})| %green(%-5p) | %-150m | %cyan(%C.%M\(%F:%L\)) %n</pattern>
+      <charset>utf8</charset>
+    </encoder>
+  </appender>
+
+  <property name="DEV_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
+
+  <appender name="FILE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/log/default.log</file>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>
+        ${DEV_PATTERN}
+      </Pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>/log/default.log.%i</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>10</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>5MB</maxFileSize>
+    </triggeringPolicy>
+  </appender>
+
+  <logger name="com.github.taufort" level="DEBUG" />
+
+  <root level="INFO">
+    <appender-ref ref="FILE-APPENDER" />
+  </root>
+
+</configuration>
